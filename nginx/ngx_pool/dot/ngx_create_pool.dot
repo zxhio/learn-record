@@ -1,0 +1,32 @@
+digraph pool {
+    compund = true
+    margin = "0.0"
+    ranksep = .75
+    nodesep = .1
+    pad = .5
+    rankdir = LR
+
+    node [shape =record, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 14]
+    edge [style = dashed, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 11]
+
+    ngx_pool_t [
+        label  = "{ <d> d | {
+                    <last>      *last |
+                    <end>       *end |
+                    <next>      *next | 
+                    <failed>    failed }
+                } |
+                <max>       *max |
+                <current>   *current |
+                <chain>     *chain |
+                <large>     *large |
+                <cleanup>   *cleanup |
+                <log>       *log |
+                <memory>    mem (size - sizeof(ngx_pool_t))
+                "
+    ]
+
+    ngx_pool_t:last:e -> ngx_pool_t:memory:ne [color = deepskyblue]
+    ngx_pool_t:end:e -> ngx_pool_t:memory:se [color = darkorchid]
+    ngx_pool_t:current -> ngx_pool_t:d:nw [color = coral]
+}

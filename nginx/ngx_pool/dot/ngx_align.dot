@@ -1,0 +1,25 @@
+digraph pool {
+        compund = true
+        margin = "0.0"
+        ranksep = .75
+        nodesep = 1
+        pad = .5
+        rankdir = TB
+
+        node [shape =record, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 14]
+        edge [style = dashed, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 11]
+
+        bin_4 [
+                label = "1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0"
+        ]
+
+        bin_3 [
+                label = "0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1"
+        ]
+
+        {
+                sank = same
+                bin_3 bin_4
+                bin_3 -> bin_4 [taillabel = "\n(short int)3的补码  ", headlabel = "(short int)-4的补码  ", label = "  '&' 操作结果为0"]
+        }
+}

@@ -1,0 +1,85 @@
+digraph pool {
+    compund = true
+    margin = "0.0"
+    ranksep = 1
+    nodesep = .5
+    pad = .5
+    rankdir = LR
+
+    node [shape =record, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 14]
+    edge [style = dashed, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 11]
+
+    ngx_pool_t [
+        color = "chocolate"
+        label  = "{ <d> d | {
+                    <last>      *last |
+                    <end>       *end |
+                    <next>      *next | 
+                    <failed>    failed }
+                } |
+                <max>       *max |
+                <current>   *current |
+                <chain>     *chain |
+                <large>     *large |
+                <cleanup>   *cleanup |
+                <log>       *log |
+                { <memory>  memory |
+                        { <used_mem> used_mem | <unused_mem> unused_mem } }
+                "
+    ]
+
+    ngx_pool_t:last:e -> ngx_pool_t:used_mem:ne [color = deepskyblue]
+    ngx_pool_t:end:e -> ngx_pool_t:used_mem:se [color = darkorchid]
+    ngx_pool_t:current -> ngx_pool_t:d:nw [color = coral]
+
+    ngx_pool_t_new_block [
+        label  = "{ <d> d | {
+                    <last>      *last |
+                    <end>       *end |
+                    <next>      *next | 
+                    <failed>    failed }
+                } |
+                <max>       *max |
+                <current>   *current |
+                <chain>     *chain |
+                <large>     *large |
+                <cleanup>   *cleanup |
+                <log>       *log |
+                { <memory>  memory |
+                        { <used_mem> used_mem | <unused_mem> unused_mem } }
+                "
+    ]
+
+    ngx_pool_t_new_block:last:e -> ngx_pool_t_new_block:used_mem:ne [color = deepskyblue]
+    ngx_pool_t_new_block:end:e -> ngx_pool_t_new_block:used_mem:se [color = darkorchid]
+
+    ngx_pool_t:next -> ngx_pool_t_new_block:nw
+
+
+    ngx_pool_large_t_1 [
+        label = "<ngx_pool_large_t> ngx_pool_large_t |
+                <next> next |
+                <alloc> alloc"
+    ]
+    ngx_pool_t:used_mem -> ngx_pool_large_t_1:nw
+    alloc_mem_1 [label = "alloc memory"]
+    ngx_pool_large_t_1 -> alloc_mem_1
+
+    ngx_pool_t:large -> ngx_pool_large_t_1
+
+    { rank=same; ngx_pool_large_t_1 alloc_mem_1 };
+
+    // ngx_pool_large_t_2 [
+    //     label = "<ngx_pool_large_t> ngx_pool_large_t |
+    //             <next> next |
+    //             <alloc> alloc"
+    // ]
+
+    // ngx_pool_large_t_3 [
+    //     label = "<ngx_pool_large_t> ngx_pool_large_t |
+    //             <next> next |
+    //             <alloc> alloc"
+    // ]
+    // alloc_mem_3 [label = "alloc memory"]
+    // ngx_pool_large_t_3:alloc -> alloc_mem_3
+}

@@ -1,0 +1,45 @@
+digraph pool {
+        compund = true
+        margin = "0.0"
+        ranksep = .75
+        nodesep = 1
+        pad = .5
+        rankdir = LR
+
+        node [shape =record, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 14]
+        edge [style = dashed, charset = "UTF-8" fontname = "Microsoft Yahei", fontsize = 11]
+
+        ngx_pool_t [
+                label = "<ngx_pool_t> struct \n ngx_pool_t |
+                        <d>        d |
+                        <max>      max |
+                        <current> *current |
+                        <chain>   *chain |
+                        <large>   *large |
+                        <cleanup> *cleanup |
+                        <log>     *log |
+                        <data>    data \n memory"
+        ]
+
+        ngx_pool_data_t [
+                color = "cornflowerblue"
+                label = "<ngx_pool_data_t> struct \n ngx_pool_data_t |
+                        <last>  *last |
+                        <end>   *end |
+                        <next>  *next |
+                        <failed> failed"
+        ]
+
+        ngx_pool_large_t [
+                label = "<ngx_pool_large_t> struct \n ngx_pool_large_t |
+                        <next>  *next |
+                        <alloc> *alloc"
+        ]
+
+        ngx_pool_cleanup_file_t [
+                label = "<ngx_pool_cleanup_file_t> struct \n ngx_pool_cleanup_file_t |
+                        <fd> fd |
+                        <name> *name |
+                        <log> *log"
+        ]
+}
